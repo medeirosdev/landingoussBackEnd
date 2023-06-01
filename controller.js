@@ -10,24 +10,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const UserModel_1 = require("./models/UserModel");
+const Email_1 = require("./email/Email");
 class Controller {
     static ResponseBody(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { nome, sobrenome, email, option } = req.body;
+            const { nome, sobrenome, email, option1, option2 } = req.body;
             if (!nome) {
                 res.status(400).json({ message: "O campo 'nome' é obrigatório." });
                 return;
             }
-            console.log(nome, sobrenome, email, option);
+            console.log(nome, sobrenome, email, option1, option2);
             const userCreated = {
                 nome: nome,
                 email: email,
                 sobrenome: sobrenome,
-                option: option,
+                perfil: option1,
+                area: option2
             };
+            const text = "a";
+            const subject = "b";
+            //const NewEmail = await Email("contato@zous.com.br" , subject , text , email )
             try {
                 const newUser = yield UserModel_1.UserModel.create(userCreated);
-                res.status(200).json({ message: "Deu certo!" });
+                //await enviarEmail(NewEmail);
+                yield (0, Email_1.sendEmail)(email, subject, text);
+                res.status(200);
             }
             catch (e) {
                 res.status(500).json({ message: e });

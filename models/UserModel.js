@@ -20,7 +20,11 @@ const UserModel = sequelize.define('user', {
         type: sequelize_1.default.STRING,
         allowNull: false,
     },
-    option: {
+    perfil: {
+        type: sequelize_1.default.STRING,
+        allowNull: false
+    },
+    area: {
         type: sequelize_1.default.STRING,
         allowNull: false
     }
